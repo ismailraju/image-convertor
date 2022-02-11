@@ -4,20 +4,27 @@ package com.raju.imageconvertor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.imageio.ImageIO;
+import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class ImageController {
@@ -33,12 +40,37 @@ public class ImageController {
 
     @GetMapping("/")
     public String homepage(Model model) {
-        model.addAttribute("requestData", new RequestData());
+        if (!model.containsAttribute("requestData")) {
+
+            model.addAttribute("requestData", new RequestData());
+        }
         return "index";
     }
 
+    @GetMapping("/upload")
+    public String uploadpage(Model model) {
+        return homepage(model);
+    }
+
     @PostMapping(path = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> resizeImage(@ModelAttribute RequestData data, RedirectAttributes attributes) throws Exception {
+    public ResponseEntity<?> resizeImage(@Valid @ModelAttribute RequestData data,
+                                         BindingResult bindingResult,
+                                         RedirectAttributes attributes,
+                                         Model model) throws Exception {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("requestData", data);
+
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getAllErrors().forEach((error) -> {
+                String fieldName = ((FieldError) error).getField();
+                String errorMessage = error.getDefaultMessage();
+                errors.put(fieldName, errorMessage);
+            });
+            return new ResponseEntity<>(
+                    errors,
+                    HttpStatus.BAD_REQUEST);
+        }
 
 
         String fileName = StringUtils.cleanPath(data.file.getOriginalFilename());
@@ -56,6 +88,7 @@ public class ImageController {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(bufferedImage, extension, baos);
         byte[] bytes = baos.toByteArray();
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment; filename=\"" + fileNameout + "\"")

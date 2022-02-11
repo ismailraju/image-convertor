@@ -38,11 +38,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto">
-                <h2>Upload File Example</h2>
+                <h2>Upload JPG/PNG File</h2>
                 <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
                 <form method="post" th:action="@{/upload}" th:object="${requestData}" enctype="multipart/form-data">
                     <div class="form-group">
                         <input type="file" th:field="*{file}" name="file" class="form-control-file">
+                        <td th:if="${#fields.hasErrors('file')}" th:errors="*{file}">file Error</td>
                     </div>
                     <div class="form-group">
                         <label for="width"> Width:</label>
