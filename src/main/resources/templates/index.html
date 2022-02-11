@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Size Convert(jpg,png)</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script type="text/javascript" th:src="@{js/fart.js}"></script>
+
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Fort.js/2.0.0/fort.min.js"></script>-->
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Fort.js/2.0.0/fort.min.css"/>-->
+
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Fort.js/2.0.0/fort.js"></script>-->
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Fort.js/2.0.0/fort.css"/>-->
+
+    <script>
+
+        $(document).ready(function () {
+            fart = new Fart();
+            // var fart = new Fart({
+            //     default_sound: farts.toot,
+            //     loop: true,
+            //     volume: 100
+            // });
+            $('#fart').click(function () {
+                fart.play();
+            });
+
+        })
+        ;
+
+    </script>
+</head>
+<body>
+
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2>Upload File Example</h2>
+                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+                <form method="post" th:action="@{/upload}" th:object="${requestData}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="file" th:field="*{file}" name="file" class="form-control-file">
+                    </div>
+                    <div class="form-group">
+                        <label for="width"> Width:</label>
+                        <input type="number" id="width" th:field="*{width}">
+                    </div>
+                    <div class="form-group">
+                        <label for="height"> Height:</label>
+                        <input type="number" id="height" th:field="*{height}">
+                    </div>
+                    <div class="form-group">
+                        <input type="reset" value="Reset" class="btn btn-primary"/>
+                        <button type="submit" class="btn btn-primary">Upload File</button>
+                        <button type="button" id="fart" class="btn btn-danger">Fart</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+</html>
