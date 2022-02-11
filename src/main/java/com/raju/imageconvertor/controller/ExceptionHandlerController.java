@@ -1,4 +1,4 @@
-package com.raju.imageconvertor;
+package com.raju.imageconvertor.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

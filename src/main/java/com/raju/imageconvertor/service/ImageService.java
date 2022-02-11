@@ -1,5 +1,6 @@
-package com.raju.imageconvertor;
+package com.raju.imageconvertor.service;
 
+import com.raju.imageconvertor.payload.Criteria;
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +10,12 @@ import java.awt.image.BufferedImage;
 public class ImageService extends Criteria {
 
 
-    BufferedImage simpleResizeImage(BufferedImage originalImage, int targetWidth) throws Exception {
+    public BufferedImage simpleResizeImage(BufferedImage originalImage, int targetWidth) throws Exception {
         return Scalr.resize(originalImage, targetWidth);
     }
 
 
-    BufferedImage resizeImage(Criteria c) throws Exception {
+   public BufferedImage resizeImage(Criteria c) throws Exception {
 
         System.out.println("input h:" + c.src.getHeight() + " w:" + c.src.getWidth());
         Scalr.Mode mode = Scalr.Mode.AUTOMATIC;

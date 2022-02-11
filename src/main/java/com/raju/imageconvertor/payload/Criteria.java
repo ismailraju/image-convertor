@@ -1,4 +1,4 @@
-package com.raju.imageconvertor;
+package com.raju.imageconvertor.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,8 +12,8 @@ import java.awt.image.BufferedImage;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Criteria {
-    BufferedImage src;
-    int w;
-    int h;
+    public BufferedImage src;
+    public int w;
+    public int h;
 
 }

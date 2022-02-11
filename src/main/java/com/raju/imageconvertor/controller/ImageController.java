@@ -1,6 +1,9 @@
-package com.raju.imageconvertor;
+package com.raju.imageconvertor.controller;
 
 
+import com.raju.imageconvertor.payload.Criteria;
+import com.raju.imageconvertor.service.ImageService;
+import com.raju.imageconvertor.payload.RequestData;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +24,6 @@ import javax.imageio.ImageIO;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;

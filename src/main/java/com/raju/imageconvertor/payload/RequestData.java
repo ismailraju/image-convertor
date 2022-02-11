@@ -1,4 +1,4 @@
-package com.raju.imageconvertor;
+package com.raju.imageconvertor.payload;
 
 
 import com.raju.imageconvertor.validator.ValidImage;
